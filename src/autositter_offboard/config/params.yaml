@@ -1,0 +1,27 @@
+offboard_planner: 
+    ros__parameters: 
+        bomber_servo_open: value
+        bomber_servo_close: value
+        takeoff_height: value
+        recon_map: 
+          - target1: 
+                lon: value
+                lat: value
+                bearing: value
+          - target2: 
+                lon: value
+                lat: value
+                bearing: value
+          - target3: 
+                lon: value
+                lat: value
+                bearing: value
+          - target4: 
+                lon: value
+                lat: value
+                bearing: value
+
+webcam_sub: 
+    ros__parameters: 
+        param1: value
+        param2: value
