@@ -11,6 +11,10 @@ def generate_launch_description():
     autositter_dir = get_package_share_directory('autositter_offboard')
 
     params_file = os.path.join(autositter_dir, 'config', 'params.yaml')
+    print(params_file)
+    print(params_file)
+    print(params_file)
+    print(params_file)
 
     return LaunchDescription([
         Node(
@@ -23,18 +27,27 @@ def generate_launch_description():
 
         Node(
             package='autositter_offboard',
-            executable='webcam_sub',
-            name='webcam_sub',
+            executable='flag_detector_node',
+            name='flag_detector_node',
             output='screen',
             parameters=[params_file]
         ),
+
+        # Node(
+        #     package='autositter_offboard',
+        #     executable='webcam_sub',
+        #     name='webcam_sub',
+        #     output='screen',
+        #     parameters=[params_file]
+        # ),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(realsense_dir, 'launch', 'rs_launch.py')
             ),
             launch_arguments={
-                'rgb_camera.color_profile': '640x480x15',
+                'rgb_camera.color_profile': '960x540x60',
+                'rgb_camera.color_format': 'BGR8',
                 'enable_depth': 'false'
             }.items()
         )

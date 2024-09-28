@@ -1,27 +1,63 @@
-offboard_planner: 
-    ros__parameters: 
-        bomber_servo_open: value
-        bomber_servo_close: value
-        takeoff_height: value
-        recon_map: 
-          - target1: 
-                lon: value
-                lat: value
-                bearing: value
-          - target2: 
-                lon: value
-                lat: value
-                bearing: value
-          - target3: 
-                lon: value
-                lat: value
-                bearing: value
-          - target4: 
-                lon: value
-                lat: value
-                bearing: value
+offboard_planner:
+  ros__parameters:
+    general:
+      coord_close_thresh: 0.8 # In meters
+      coord_approach_thresh: 3.0 # In meters
+      arming_t_max: 240.0 # Max arming time in seconds before returning
+    goto_speed: # (h, v) for (horizontal, vertical), in m/s
+      recon_travel_h: 3.0
+      recon_align_h: 2.0
+      recon_align_v: 1.5
+      bombing_align_h: 2.5
+      bombing_align_v: 2.0
+    takeoff:
+      height: 3.0 # In meters
+    recon:
+      height: 14.5 # In meters
+      align:
+        ctrl_p: 0.5 # Controller P term
+        v_rate: 0.5 # In m/s
+        max_v_dist: 3.0 # In meters
+      target_info: # List of float typed [name, lon, lat, bearing]
+        0: [61.0, 38.51131, 114.992021, 0.0]
+        1: [62.0, 38.51132, 114.992022, 0.0]
+        2: [63.0, 38.51133, 114.992023, 0.0]
+        3: [64.0, 38.51134, 114.992024, 0.0]
+      circle_recipe: # [radius (m), number_of_points], indexed by recon_round
+        0: [0, 1]
+        1: [1, 6]
+        2: [2, 12]
+        3: [3, 18]
+    bombing:
+      height: 14.5 # In meters
+      align:
+        ctrl_p: 0.8 # Controller P term
+        v_rate: 0.8 # In m/s
+      release_altitude: 4.0 # In meters
+      fuselage_open: -1.0 # Actuater command [-1 ~ 1]
+      fuselage_close: 0.9 # Actuater command [-1 ~ 1]
+    landing:
+      crit_height: 1.0 # In meters
+      crit_t_max: 1.5 # In seconds
+      brake_l_open: 0.2 # Actuater command [-1 ~ 1]
+      brake_r_open: -0.2 # Actuater command [-1 ~ 1]
+      brake_l_close: 0.8 # Actuater command [-1 ~ 1]
+      brake_r_close: -0.8 # Actuater command [-1 ~ 1]
 
-webcam_sub: 
-    ros__parameters: 
-        param1: value
-        param2: value
+flag_detector_node:
+  ros__parameters:
+    color_filters: # HSV format
+      # - lower: [0, 120, 70]
+      #   upper: [10, 255, 255] # Red 1
+      # - lower: # Red 2
+      #     - 170
+      #       120
+      #       70
+      #   upper:
+      #     - 180
+      #       255
+      #       255
+      0: [100, 100, 0, 140, 255, 255] # Blue
+    rot_compensation_mode: "visual" # ["bearing", "visual"]
+    safe_column_width_ratio: 0.5
+    reference_image_path: "/home/pi/AutoSitter/autositter_ws/src/autositter_offboard/data/reference.png"

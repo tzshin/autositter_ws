@@ -12,15 +12,15 @@ from cv_bridge import CvBridge
 import cv2 as cv
 
 
-class WebcamSubscriber(Node):
+class WebcamSub(Node):
     def __init__(self):
-        super().__init__('webcam_subscriber')
+        super().__init__('webcam_sub')
 
         self.subscription = self.create_subscription(
             Image,
             '/camera/camera/color/image_raw',
             self.listener_callback,
-            10)
+            1)
 
         self.br = CvBridge()
 
@@ -36,10 +36,10 @@ class WebcamSubscriber(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    webcam_subscriber = WebcamSubscriber()
+    webcam_sub = WebcamSub()
 
-    rclpy.spin(webcam_subscriber)
-    webcam_subscriber.destroy_node()
+    rclpy.spin(webcam_sub)
+    webcam_sub.destroy_node()
     rclpy.shutdown()
 
 

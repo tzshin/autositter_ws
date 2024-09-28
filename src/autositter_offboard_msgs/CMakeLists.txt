@@ -9,9 +9,13 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
+# get all msg files
+set(MSGS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/msg")
+file(GLOB MSGS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${MSGS_DIR}/*.msg")
+
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/FlagReport.msg"
- )
+  ${MSGS}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
